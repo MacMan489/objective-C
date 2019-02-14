@@ -1,0 +1,88 @@
+Create an objective c program implementing hard coded data of three strings and one integer value that is then stored as an object class
+
+
+Code: 
+#import
+
+@interface DataPersistenceExampleViewController : UIViewController {
+IBOutlet UITextField* textBox00;
+IBOutlet UITextField* textBox01;
+IBOutlet UITextField* textBox02;
+IBOutlet UILabel* storageLocationLabel;
+
+NSString* storagePath;
+}
+
+@property (retain) IBOutlet UITextField *textBox00;
+@property (retain) IBOutlet UITextField *textBox01;
+@property (retain) IBOutlet UITextField *textBox02;
+@property (retain) IBOutlet UILabel *storageLocationLabel;
+@property (retain) NSString *storagePath;
+
+- (IBAction)saveButtonClicked:(id)sender;
+- (IBAction)loadButtonClicked:(id)sender;
+
+@end
+
+#import "DataPersistenceExampleViewController.h"
+
+@implementation DataPersistenceExampleViewController
+@synthesize textBox00;
+@synthesize textBox01;
+@synthesize textBox02;
+@synthesize storageLocationLabel;
+//@synthesize storagePath;
+
+- (IBAction)saveButtonClicked:(id)sender
+{
+NSArray* valueList = [NSArray arrayWithObjects:
+textBox00.text,textBox01.text, textBox02.text, nil];
+
+NSArray *myPathList = NSSearchPathForDirectoriesInDomains(
+NSDocumentDirectory, NSUserDomainMask, YES);
+NSString *myPath = [myPathList objectAtIndex:0];
+storagePath = [myPath stringByAppendingPathComponent:@"myData.txt"];
+
+storageLocationLabel.text = storagePath;
+
+[valueList writeToFile:storagePath atomically:true];
+
+}
+
+- (IBAction)loadButtonClicked:(id)sender
+{
+
+NSArray *myPathList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+NSUserDomainMask, YES);
+NSString *myPath = [myPathList objectAtIndex:0];
+storagePath = [myPath stringByAppendingPathComponent:@"myData.txt"];
+NSArray* valueList = [[NSArray alloc] initWithContentsOfFile:storagePath];
+
+textBox00.text = [valueList objectAtIndex:0];
+textBox01.text = [valueList objectAtIndex:1];
+textBox02.text = [valueList objectAtIndex:2];
+}
+
+- (void)didReceiveMemoryWarning {
+// Releases the view if it doesn't have a superview.
+[super didReceiveMemoryWarning];
+
+// Release any cached data, images, etc that aren't in use.
+}
+
+- (void)viewDidUnload {
+self.textBox00=nil;
+self.textBox01=nil;
+self.textBox02=nil;
+self.storageLocationLabel=nil;
+}
+
+
+- (void)dealloc {
+[textBox00 release];
+[textBox01 release];
+[textBox02 release];
+[storageLocationLabel release]
+[super dealloc];
+}
+@end
