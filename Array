@@ -1,0 +1,33 @@
+Assignment: 
+You need to write an Objective C program that will work with an array.
+
+Create an array of type double. You will ask the user what size array they want. Use a printf and then a scanf to accept an int. That int will be used to create the size of your array.
+
+You will than ask the user for the values that will be stored in the array. The for loop will be ran as many times as the size of your array.
+
+After the array is built, you need to find the average of the values of the array, the min and the max of the values in the array and display them. You could use 3 different for loops to do this or you can accomplish all 3 inside the same for loop.
+
+Code: 
+#include<stdio.h>
+main()
+{
+int a[50],i,n,max=0,min=999,avg=0;
+clrscr();
+printf("enter the array size:");
+scanf("%d",&n);
+printf("\nenter the array elements:");
+for(i=1;i<=n;i++)
+{
+scanf("%d",&a[i]);
+if(a[i]>max)
+max=a[i];
+if(a[i]<min)
+min=a[i];
+avg=avg+a[i];
+}
+avg=avg/n;
+printf("array elements:");
+for(i=1;i<=n;i++)
+printf("\n%d",a[i]);
+printf("\n AVERAGE : %d\n MAX : %d \nMIN : %d",avg,max,min);
+}
